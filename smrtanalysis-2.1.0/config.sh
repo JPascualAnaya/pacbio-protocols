@@ -9,5 +9,5 @@
 
 # module load cross_match/latest
 # module load bedtools/latest
-export MAKEDIR=/home/champi/Documents/hagfish/pacbio/${BAC_FOLDER}/assemblies/smrtanalysis-2.1.0
+export MAKEDIR=/home/champi/Documents/hagfish/pacbio/smrtanalysis-2.1.0
 export VECTOR=/home/champi/Documents/hagfish/pacbio/pCC1BAC-HindIII.fasta
