@@ -44,10 +44,7 @@ input.masked.fofn : $(UPDATED_REGIONS)
 	cut -f 1 $^ | sort -k 1,1 | uniq > $@
 
 %.screen.bed : vectors.txt %.screen.out
-	grep -f $^ \
-		| awk 'OFS="\t" { if ($$7-$$6 >= 100) { print $$5,$$6,$$7 } }' \
-		| sort -k 1,1 -k 2,2n \
-		| mergeBed -i stdin -d 500 > $@
+	grep -f $^ | awk 'OFS="\t" { if ($$7-$$6 >= 100) { print $$5,$$6,$$7 } }' | sort -k 1,1 -k 2,2n | mergeBed -i stdin -d 500 > $@
 
 vectors.txt :
 	grep "^>" $(VECTOR) | sed 's/>//' > $@
