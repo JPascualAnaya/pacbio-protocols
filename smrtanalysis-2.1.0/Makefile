@@ -27,7 +27,7 @@ input.masked.fofn : $(UPDATED_REGIONS)
 	find ./ -name "*.bax.h5" -exec readlink -f {} \; > $@
 
 %.regions.log : %.non_vector.bed
-	python update_regions.py $* $< 2> $@
+	python $MAKEDIR/update_regions.py $* $< 2> $@
 
 %.non_vector.bed : %.screen.bed %.read_lengths.screen.tab
 	bedtools complement -i $*.screen.bed -g $*.read_lengths.screen.tab > $@
@@ -44,7 +44,10 @@ input.masked.fofn : $(UPDATED_REGIONS)
 	cut -f 1 $^ | sort -k 1,1 | uniq > $@
 
 %.screen.bed : vectors.txt %.screen.out
-	grep -f $^ | awk 'OFS="\t" { if ($$7-$$6 >= 100) { print $$5,$$6,$$7 } }' | sort -k 1,1 -k 2,2n | mergeBed -i stdin -d 500 > $@
+	grep -f $^ \
+		| awk 'OFS="\t" { if ($$7-$$6 >= 100) { print $$5,$$6,$$7 } }' \
+		| sort -k 1,1 -k 2,2n \
+		| mergeBed -i stdin -d 500 > $@
 
 vectors.txt :
 	grep "^>" $(VECTOR) | sed 's/>//' > $@
